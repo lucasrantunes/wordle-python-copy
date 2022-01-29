@@ -105,4 +105,6 @@ keyboard_frame.grid(row=1)
 
 root.configure(bg=bg_color)
 
+root.resizable(False, False)
+
 root.mainloop()
