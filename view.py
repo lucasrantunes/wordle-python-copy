@@ -1,110 +1,129 @@
-from tkinter import *
+import tkinter as tk
 
 bg_color = "#6E5C62"
 disabled_bg_color = "#615458"
 button_color = "#4C4347"
 
-def create_label(label_frame, label_status):
-    if label_status == False:
-        return Label(label_frame, text=" ", width=2, 
-                background=disabled_bg_color, 
-                borderwidth=2, font=("Arial", 30, "bold"), relief="solid")
-    else:
-        return Label(label_frame, text=" ", width=2, 
-                background=bg_color, 
-                borderwidth=2, font=("Arial", 30, "bold"), relief="solid")
+class View(tk.Tk):
+    def __init__(self, key_event_letter, key_event_backspace, key_event_enter):
+        super().__init__()
+        self.title("Wordle")
+        self.label_box_frame = tk.Frame(self, padx=20, pady=20, bg=bg_color)
+        label_row = 0
+        self.label_box = [[] for i in range(6)]
 
-root = Tk(className="Wordle")
+        while label_row < 6:
+            label_column = 0
+            while label_column < 5:
+                label_status = True if label_row == 0 else False
 
-label_box_frame = Frame(root, padx=20, pady=20, bg=bg_color)
-label_row = 0
-label_box = [[] for i in range(5)]
+                label_frame = tk.Frame(self.label_box_frame, padx=2, pady=2, bg=bg_color)
+                self.label_box[label_row].append(self.create_label(label_frame, label_status))
+                self.label_box[label_row][label_column].pack()
 
-while label_row < 5:
-    label_column = 0
-    while label_column < 5:
-        label_status = True if label_row == 0 else False
+                label_frame.grid(row=label_row, column=label_column)
+                label_column += 1
 
-        label_frame = Frame(label_box_frame, padx=2, pady=2, bg=bg_color)
-        label_box[label_row].append(create_label(label_frame, label_status))
-        label_box[label_row][label_column].pack()
+            label_row += 1
 
-        label_frame.grid(row=label_row, column=label_column)
-        label_column += 1
+        self.label_box_frame.grid(row = 0)
 
-    label_row += 1
+        self.keyboard_frame = tk.Frame(self, background=bg_color, padx=20, pady=20)
 
-label_box_frame.grid(row = 0)
+        self.Q_key = tk.Button(self.keyboard_frame, text="Q", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("Q"))
+        self.Q_key.grid(row=0, column=0)
+        self.W_key = tk.Button(self.keyboard_frame, text="W", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("W"))
+        self.W_key.grid(row=0, column=1)
+        self.E_key = tk.Button(self.keyboard_frame, text="E", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("E"))
+        self.E_key.grid(row=0, column=2)
+        self.R_key = tk.Button(self.keyboard_frame, text="R", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("R"))
+        self.R_key.grid(row=0, column=3)
+        self.T_key = tk.Button(self.keyboard_frame, text="T", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("T"))
+        self.T_key.grid(row=0, column=4)
+        self.Y_key = tk.Button(self.keyboard_frame, text="Y", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("Y"))
+        self.Y_key.grid(row=0, column=5)
+        self.U_key = tk.Button(self.keyboard_frame, text="U", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("U"))
+        self.U_key.grid(row=0, column=6)
+        self.I_key = tk.Button(self.keyboard_frame, text="I", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("I"))
+        self.I_key.grid(row=0, column=7)
+        self.O_key = tk.Button(self.keyboard_frame, text="O", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("O"))
+        self.O_key.grid(row=0, column=8)
+        self.P_key = tk.Button(self.keyboard_frame, text="P", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("P"))
+        self.P_key.grid(row=0, column=9)
 
-keyboard_frame = Frame(root, background=bg_color, padx=20, pady=20)
+        self.A_key = tk.Button(self.keyboard_frame, text="A", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("A"))
+        self.A_key.grid(row=1, column=0)
+        self.S_key = tk.Button(self.keyboard_frame, text="S", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("S"))
+        self.S_key.grid(row=1, column=1)
+        self.D_key = tk.Button(self.keyboard_frame, text="D", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("D"))
+        self.D_key.grid(row=1, column=2)
+        self.F_key = tk.Button(self.keyboard_frame, text="F", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("F"))
+        self.F_key.grid(row=1, column=3)
+        self.G_key = tk.Button(self.keyboard_frame, text="G", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("G"))
+        self.G_key.grid(row=1, column=4)
+        self.H_key = tk.Button(self.keyboard_frame, text="H", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("H"))
+        self.H_key.grid(row=1, column=5)
+        self.J_key = tk.Button(self.keyboard_frame, text="J", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("J"))
+        self.J_key.grid(row=1, column=6)
+        self.K_key = tk.Button(self.keyboard_frame, text="K", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("K"))
+        self.K_key.grid(row=1, column=7)
+        self.L_key = tk.Button(self.keyboard_frame, text="L", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("L"))
+        self.L_key.grid(row=1, column=8)
 
-Q_key = Button(keyboard_frame, text="Q", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-Q_key.grid(row=0, column=0)
-W_key = Button(keyboard_frame, text="W", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-W_key.grid(row=0, column=1)
-E_key = Button(keyboard_frame, text="E", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-E_key.grid(row=0, column=2)
-R_key = Button(keyboard_frame, text="R", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-R_key.grid(row=0, column=3)
-T_key = Button(keyboard_frame, text="T", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-T_key.grid(row=0, column=4)
-Y_key = Button(keyboard_frame, text="Y", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-Y_key.grid(row=0, column=5)
-U_key = Button(keyboard_frame, text="U", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-U_key.grid(row=0, column=6)
-I_key = Button(keyboard_frame, text="I", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-I_key.grid(row=0, column=7)
-O_key = Button(keyboard_frame, text="O", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-O_key.grid(row=0, column=8)
-P_key = Button(keyboard_frame, text="P", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-P_key.grid(row=0, column=9)
+        self.backspace_img = tk.PhotoImage(file="img/backspace_button.png")
+        self.backspace_key = tk.Button(self.keyboard_frame, image=self.backspace_img, background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, command=key_event_backspace)
+        self.backspace_key.grid(row=1, column=9)
 
-A_key = Button(keyboard_frame, text="A", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-A_key.grid(row=1, column=0)
-S_key = Button(keyboard_frame, text="S", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-S_key.grid(row=1, column=1)
-D_key = Button(keyboard_frame, text="D", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-D_key.grid(row=1, column=2)
-F_key = Button(keyboard_frame, text="F", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-F_key.grid(row=1, column=3)
-G_key = Button(keyboard_frame, text="G", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-G_key.grid(row=1, column=4)
-H_key = Button(keyboard_frame, text="H", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-H_key.grid(row=1, column=5)
-J_key = Button(keyboard_frame, text="J", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-J_key.grid(row=1, column=6)
-K_key = Button(keyboard_frame, text="K", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-K_key.grid(row=1, column=7)
-L_key = Button(keyboard_frame, text="L", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-L_key.grid(row=1, column=8)
+        self.Z_key = tk.Button(self.keyboard_frame, text="Z", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("Z"))
+        self.Z_key.grid(row=2, column=0)
+        self.X_key = tk.Button(self.keyboard_frame, text="X", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("X"))
+        self.X_key.grid(row=2, column=1)
+        self.C_key = tk.Button(self.keyboard_frame, text="C", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("C"))
+        self.C_key.grid(row=2, column=2)
+        self.V_key = tk.Button(self.keyboard_frame, text="V", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("V"))
+        self.V_key.grid(row=2, column=3)
+        self.B_key = tk.Button(self.keyboard_frame, text="B", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("B"))
+        self.B_key.grid(row=2, column=4)
+        self.N_key = tk.Button(self.keyboard_frame, text="N", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("N"))
+        self.N_key.grid(row=2, column=5)
+        self.M_key = tk.Button(self.keyboard_frame, text="M", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1, command=lambda: key_event_letter("M"))
+        self.M_key.grid(row=2, column=6)
 
-backspace_img = PhotoImage(file="img/backspace_button.png")
-backspace_key = Button(keyboard_frame, image=backspace_img, background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color)
-backspace_key.grid(row=1, column=9)
+        self.enter_img = tk.PhotoImage(file="img/enter_button.png")
+        self.enter_key = tk.Button(self.keyboard_frame, image=self.enter_img, background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, command=key_event_enter)
+        self.enter_key.grid(row=2, column=7)
 
-Z_key = Button(keyboard_frame, text="Z", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-Z_key.grid(row=2, column=0)
-X_key = Button(keyboard_frame, text="X", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-X_key.grid(row=2, column=1)
-C_key = Button(keyboard_frame, text="C", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-C_key.grid(row=2, column=2)
-V_key = Button(keyboard_frame, text="V", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-V_key.grid(row=2, column=3)
-B_key = Button(keyboard_frame, text="B", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-B_key.grid(row=2, column=4)
-N_key = Button(keyboard_frame, text="N", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-N_key.grid(row=2, column=5)
-M_key = Button(keyboard_frame, text="M", background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color, width=1)
-M_key.grid(row=2, column=6)
+        self.keyboard_frame.grid(row=1)
+        self.configure(bg=bg_color)
 
-enter_img = PhotoImage(file="img/enter_button.png")
-enter_key = Button(keyboard_frame, image=enter_img, background=button_color, activebackground=button_color, font=("Arial", 24, "bold"), foreground="white", activeforeground="white", borderwidth=0, highlightbackground=bg_color)
-enter_key.grid(row=2, column=7)
+        self.resizable(False, False)
 
-keyboard_frame.grid(row=1)
 
-root.configure(bg=bg_color)
+    def create_label(self, label_frame, label_status):
+        if label_status == False:
+            return tk.Label(label_frame, text=" ", width=2, 
+                    background=disabled_bg_color, foreground="white",
+                    borderwidth=2, font=("Arial", 30, "bold"), relief="solid")
+        else:
+            return tk.Label(label_frame, text=" ", width=2, 
+                    background=bg_color, foreground="white",
+                    borderwidth=2, font=("Arial", 30, "bold"), relief="solid")
 
-root.resizable(False, False)
+    def get_label_text(self, label_row, label_column):
+        return self.label_box[label_row][label_column].cget("text")
 
-root.mainloop()
+    def update_label_box(self, label_row, label_column, letter):
+        self.label_box[label_row][label_column]['text'] = letter
+    
+    def active_label_row(self, label_row):
+        for column in range(0, 5):
+            self.label_box[label_row][column]['background'] = bg_color
+            print(column)
+            print(label_row)
+
+# def key_event(key):
+#     print(f"Internal key event: {key}")
+
+# if __name__ == "__main__":
+#     view = View(key_event)
+#     view.mainloop()
